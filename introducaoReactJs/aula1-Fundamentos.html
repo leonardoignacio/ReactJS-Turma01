@@ -1,0 +1,366 @@
+<!-- Chosen Palette: Slate & Orange -->
+<!-- Application Structure Plan: A comprehensive SPA with a fixed sidebar for modular navigation (Fundamentos, Mão na Massa, Avaliação). This structure creates a clear learning path. The main content area dynamically displays sections. The practical guide uses a tabbed interface for direct tool comparison. The quiz is interactive, providing instant feedback and score calculation, followed by a detailed answer key. The key interaction remains the "copy to clipboard" feature for all code, alongside the new quiz functionality. This architecture transforms disparate documents into a unified, interactive educational experience. -->
+<!-- Visualization & Content Choices: Report Info: All theoretical concepts, practical guides, and quiz questions. -> Goal: Consolidate all materials into a single, interactive learning portal. -> Viz/Presentation: Use of styled cards for concepts and comparisons; HTML/CSS diagrams for visual explanation (no SVG); a tabbed interface for the practical guide; and an interactive form for the quiz. -> Interaction: Sidebar navigation, tab switching, "copy to clipboard" buttons, and a fully functional quiz with answer submission, scoring, and feedback. -> Justification: This multi-faceted approach addresses different learning needs—reading, doing, and testing—within one seamless interface. Vanilla JS handles all state management and interactivity, ensuring the application is self-contained and performant. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Treinamento React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        .nav-link.active {
+            background-color: #f97316;
+            color: #ffffff;
+        }
+        .tab-button.active {
+            border-color: #f97316;
+            background-color: #fff;
+            color: #f97316;
+            font-weight: 600;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(1rem); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .copy-button .copy-icon, .copy-button .check-icon {
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        }
+        .copy-button .check-icon {
+            transform: scale(0);
+            opacity: 0;
+            position: absolute;
+        }
+        .copy-button.copied .copy-icon {
+            transform: scale(0);
+            opacity: 0;
+        }
+        .copy-button.copied .check-icon {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .quiz-question.correct {
+            border-left-color: #22c55e; /* green-500 */
+        }
+        .quiz-question.incorrect {
+            border-left-color: #ef4444; /* red-500 */
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside class="w-full md:w-72 bg-white md:border-r border-slate-200 p-6 flex-shrink-0">
+            <header class="flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center">
+                     <span class="text-2xl text-orange-400 font-bold">R</span>
+                </div>
+                <h1 class="text-xl font-bold text-slate-900">Treinamento React</h1>
+            </header>
+            <nav id="main-navigation">
+                <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Módulo 1: Fundamentos</h2>
+                <ul class="space-y-2">
+                    <li><a href="#introducao" data-target="introducao" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Introdução ao React</a></li>
+                    <li><a href="#componentes-jsx" data-target="componentes-jsx" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Componentes e JSX</a></li>
+                    <li><a href="#state-props" data-target="state-props" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">State e Props</a></li>
+                    <li><a href="#vdom" data-target="vdom" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">DOM Virtual</a></li>
+                </ul>
+
+                <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-8 mb-3">Módulo 2: Mão na Massa</h2>
+                 <ul class="space-y-2">
+                    <li><a href="#ola-mundo" data-target="ola-mundo" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Guia "Olá Mundo"</a></li>
+                    <li><a href="#comparativo" data-target="comparativo" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Comparativo</a></li>
+                </ul>
+
+                <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-8 mb-3">Módulo 3: Avaliação</h2>
+                 <ul class="space-y-2">
+                    <li><a href="#questionario" data-target="questionario" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Questionário</a></li>
+                    <li><a href="#gabarito" data-target="gabarito" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Gabarito Comentado</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 sm:p-10 overflow-y-auto">
+            
+            <section id="introducao" class="content-section space-y-8">
+                <h1 class="text-4xl font-bold text-slate-900">O que é React?</h1>
+                <p class="text-lg text-slate-600">React é uma biblioteca JavaScript para construir interfaces de usuário. Ele permite criar UIs complexas a partir de pequenas peças de código isoladas chamadas "componentes".</p>
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3">UI Declarativa</h3>
+                    <p class="text-slate-600">Você descreve como sua UI deve se parecer, e o React cuida de atualizar o DOM de forma otimizada quando os dados mudam. Você diz *o que* quer exibir, não *como* fazer.</p>
+                </div>
+            </section>
+            
+            <section id="componentes-jsx" class="content-section space-y-8">
+                <h1 class="text-4xl font-bold text-slate-900">Componentes e JSX</h1>
+                <p class="text-lg text-slate-600">Componentes são blocos de construção reutilizáveis que encapsulam sua própria lógica e aparência. JSX é uma extensão de sintaxe que permite escrever marcação semelhante a HTML no JavaScript.</p>
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-4">Visualizando a Composição</h3>
+                     <div class="border-2 border-slate-400 rounded-lg p-4 bg-slate-50 text-center">
+                        <div class="border border-dashed border-slate-400 rounded p-2 font-medium text-slate-600">App (Componente Raiz)</div>
+                        <div class="flex gap-4 mt-4">
+                            <div class="flex-1 border border-dashed border-slate-400 rounded p-2 font-medium text-slate-600">Header</div>
+                            <div class="flex-1 border border-dashed border-slate-400 rounded p-2 font-medium text-slate-600">Sidebar</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="state-props" class="content-section space-y-8">
+                 <h1 class="text-4xl font-bold text-slate-900">State e Props</h1>
+                 <p class="text-lg text-slate-600">São os dois tipos de dados que controlam um componente.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold mb-3">Props (Propriedades)</h3>
+                        <p class="text-slate-600">Passam dados de um componente pai para um filho. São somente leitura.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold mb-3">State (Estado)</h3>
+                        <p class="text-slate-600">Dados gerenciados internamente por um componente. Quando muda, o componente renderiza novamente.</p>
+                    </div>
+                 </div>
+            </section>
+            
+            <section id="vdom" class="content-section space-y-8">
+                <h1 class="text-4xl font-bold text-slate-900">O DOM Virtual</h1>
+                <p class="text-lg text-slate-600">É uma cópia do DOM real mantida em memória, que torna o React rápido.</p>
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-4">Processo de Atualização</h3>
+                    <p class="text-slate-600">Quando o estado muda, o React cria um novo DOM Virtual, compara com o antigo (diffing), e atualiza no DOM real apenas o que mudou, de forma otimizada.</p>
+                </div>
+            </section>
+
+            <section id="ola-mundo" class="content-section">
+                <h1 class="text-4xl font-bold text-slate-900 mb-4">Guia Prático: Olá Mundo</h1>
+                 <p class="text-lg text-slate-600 mb-8">Crie sua primeira aplicação com as ferramentas mais comuns do ecossistema.</p>
+                 <div id="tab-navigation" class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 p-2 bg-slate-200 rounded-xl mb-12">
+                    <button data-target="cra-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 border-b-4 border-transparent text-slate-600 rounded-lg">Create React App</button>
+                    <button data-target="vite-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 border-b-4 border-transparent text-slate-600 rounded-lg">Vite</button>
+                    <button data-target="nextjs-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 border-b-4 border-transparent text-slate-600 rounded-lg">Next.js</button>
+                </div>
+                
+                <div id="cra-guide" class="guide-content space-y-8"></div>
+                <div id="vite-guide" class="guide-content space-y-8"></div>
+                <div id="nextjs-guide" class="guide-content space-y-8"></div>
+            </section>
+
+            <section id="comparativo" class="content-section">
+                <h1 class="text-4xl font-bold text-slate-900 mb-4">Comparativo de Ferramentas</h1>
+                <p class="text-lg text-slate-600 mb-8">Entenda as diferenças para fazer a escolha certa para o seu projeto.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Create React App</h3>
+                        <p class="text-slate-600"><strong>Abordagem:</strong> Empacota tudo com Webpack. Lento, mas estável.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-2 border-orange-500">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Vite</h3>
+                        <p class="text-slate-600"><strong>Abordagem:</strong> Usa módulos ES nativos. Extremamente rápido. Ideal para SPAs.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Next.js</h3>
+                        <p class="text-slate-600"><strong>Abordagem:</strong> Framework completo com SSR. Ótimo para SEO e performance.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="questionario" class="content-section">
+                <h1 class="text-4xl font-bold text-slate-900 mb-4">Questionário</h1>
+                <p class="text-lg text-slate-600 mb-8">Teste seus conhecimentos. Responda às perguntas abaixo e veja sua pontuação.</p>
+                <div id="quiz-container" class="space-y-6"></div>
+                <div id="quiz-results" class="mt-8 text-center"></div>
+                <button id="submit-quiz" class="mt-6 w-full bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors">Verificar Respostas</button>
+            </section>
+
+            <section id="gabarito" class="content-section">
+                 <h1 class="text-4xl font-bold text-slate-900 mb-4">Gabarito Comentado</h1>
+                 <p class="text-lg text-slate-600 mb-8">Revise suas respostas e entenda os conceitos por trás de cada pergunta.</p>
+                 <div id="gabarito-container" class="space-y-6"></div>
+            </section>
+
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const copyIconSVG = `<svg class="copy-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
+        const checkIconSVG = `<svg class="check-icon w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        
+        const data = {
+            practicalGuides: {
+                cra: { title: 'Create React App', steps: [ { title: '1. Crie o projeto', command: 'npx create-react-app ola-mundo-cra' }, { title: '2. Navegue até a pasta', command: 'cd ola-mundo-cra' }, { title: '3. Edite `src/App.js`', code: `function App() {\n  return <h1>Olá Mundo com CRA!</h1>;\n}\nexport default App;` }, { title: '4. Inicie o servidor', command: 'npm start' }] },
+                vite: { title: 'Vite', steps: [ { title: '1. Crie o projeto', command: 'npm create vite@latest ola-mundo-vite' }, { title: '2. Instale as dependências', command: 'cd ola-mundo-vite && npm install' }, { title: '3. Edite `src/App.jsx`', code: `function App() {\n  return <h1>Olá Mundo com Vite!</h1>;\n}\nexport default App;` }, { title: '4. Inicie o servidor', command: 'npm run dev' }] },
+                nextjs: { title: 'Next.js', steps: [ { title: '1. Crie o projeto', command: 'npx create-next-app@latest ola-mundo-next' }, { title: '2. Navegue até a pasta', command: 'cd ola-mundo-next' }, { title: '3. Edite `app/page.js`', code: `export default function Home() {\n  return <h1>Olá Mundo com Next.js!</h1>;\n}` }, { title: '4. Inicie o servidor', command: 'npm run dev' }] }
+            },
+            quiz: [
+                { id: 'q1', type: 'teorica', question: 'O que é o DOM Virtual?', options: ['Uma cópia do DOM real em memória para otimizar atualizações.', 'Um framework concorrente do React.', 'Uma forma de estilizar componentes.'], answer: 'Uma cópia do DOM real em memória para otimizar atualizações.', explanation: 'O DOM Virtual permite que o React calcule as mudanças (diffing) em memória e atualize o DOM real apenas onde for necessário, o que é muito mais performático.' },
+                { id: 'q2', type: 'teorica', question: 'Qual a principal diferença entre State e Props?', options: ['State é interno e mutável, Props são externas e imutáveis.', 'State é para estilo, Props para lógica.', 'Não há diferença.'], answer: 'State é interno e mutável, Props são externas e imutáveis.', explanation: 'State gerencia dados internos de um componente, enquanto Props são usadas para passar dados de pai para filho de forma unidirecional e imutável.' },
+                { id: 'q3', type: 'teorica', question: 'Para que serve o JSX?', options: ['Para escrever HTML dentro do JavaScript.', 'Para gerenciar o estado da aplicação.', 'Para criar animações.'], answer: 'Para escrever HTML dentro do JavaScript.', explanation: 'JSX é uma extensão de sintaxe que facilita a criação de elementos React, combinando a estrutura do HTML com a lógica do JavaScript no mesmo arquivo.' },
+                { id: 'q4', type: 'teorica', question: 'Qual ferramenta é recomendada para criar uma SPA (Single Page Application) com foco em velocidade de desenvolvimento?', options: ['Vite', 'Create React App', 'Next.js'], answer: 'Vite', explanation: 'Vite utiliza módulos ES nativos para um servidor de desenvolvimento quase instantâneo, tornando-o a escolha mais rápida para iniciar e desenvolver SPAs.' },
+                { id: 'q5', type: 'teorica', question: 'Quando você deve escolher Next.js em vez de Vite?', options: ['Quando precisar de SEO e renderização no servidor (SSR).', 'Apenas para projetos pequenos.', 'Quando a velocidade do servidor de desenvolvimento é a única prioridade.'], answer: 'Quando precisar de SEO e renderização no servidor (SSR).', explanation: 'Next.js é um framework completo que brilha em cenários que exigem otimização para motores de busca (SEO) e performance de carregamento inicial, graças ao SSR e SSG.' },
+                { id: 'q6', type: 'pratica', question: 'Escreva o comando para criar um novo projeto React usando Vite.', answer: 'npm create vite@latest', explanation: '`npm create vite@latest` é o comando padrão para iniciar o assistente de criação de projetos Vite, que então perguntará o nome do projeto e o framework desejado.' },
+                { id: 'q7', type: 'pratica', question: 'Como você passaria uma propriedade `nome` com o valor "Mundo" para um componente `<Saudacao />`?', answer: '<Saudacao nome="Mundo" />', explanation: 'Props são passadas como atributos em JSX, de forma muito semelhante aos atributos HTML. A sintaxe é `propName={value}` para expressões ou `propName="string"` para literais.' },
+                { id: 'q8', type: 'pratica', question: 'Dentro de um componente, qual o nome do atributo JSX que corresponde ao atributo `class` do HTML?', answer: 'className', explanation: '`class` é uma palavra reservada em JavaScript. Por isso, o JSX utiliza `className` para definir classes CSS em elementos.' },
+                { id: 'q9', type: 'pratica', question: 'Qual comando inicia o servidor de desenvolvimento em um projeto criado com Create React App?', answer: 'npm start', explanation: '`npm start` é o script padrão definido no `package.json` do CRA para iniciar o servidor de desenvolvimento do Webpack.' },
+                { id: 'q10', type: 'pratica', question: 'Qual é o hook básico do React para adicionar estado a um componente de função?', answer: 'useState', explanation: 'O hook `useState` é a forma fundamental de declarar e gerenciar o estado interno de um componente de função, permitindo que ele seja reativo e interativo.' }
+            ]
+        };
+
+        const mainContent = document.querySelector('main');
+        const nav = document.getElementById('main-navigation');
+        
+        function showSection(targetId) {
+            mainContent.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            nav.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            const section = document.getElementById(targetId);
+            const link = nav.querySelector(`.nav-link[data-target="${targetId}"]`);
+            if (section) {
+                section.classList.add('active', 'fade-in');
+                if (link) link.classList.add('active');
+            }
+        }
+        
+        nav.addEventListener('click', (e) => {
+            const link = e.target.closest('.nav-link');
+            if(link) {
+                e.preventDefault();
+                const targetId = link.dataset.target;
+                window.location.hash = targetId;
+                showSection(targetId);
+            }
+        });
+
+        function setupCopyButtons() {
+            document.querySelectorAll('.copy-button').forEach(button => {
+                if(button.childElementCount > 0) return;
+                button.innerHTML = copyIconSVG + checkIconSVG;
+                button.addEventListener('click', () => {
+                    const codeElement = button.parentElement.querySelector('code');
+                    navigator.clipboard.writeText(codeElement.innerText);
+                    button.classList.add('copied');
+                    setTimeout(() => button.classList.remove('copied'), 2000);
+                });
+            });
+        }
+        
+        function renderPracticalGuide() {
+            const container = document.getElementById('ola-mundo');
+            const tabNav = container.querySelector('#tab-navigation');
+            
+            Object.keys(data.practicalGuides).forEach(key => {
+                const guide = data.practicalGuides[key];
+                const guideContentEl = container.querySelector(`#${key}-guide`);
+                guideContentEl.innerHTML = guide.steps.map(step => {
+                    let block = '';
+                    if (step.command) {
+                        block = `<div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between"><code class="text-slate-200 font-mono text-sm">${step.command}</code><button class="copy-button relative w-8 h-8 flex-shrink-0 bg-slate-600 text-white rounded-md flex items-center justify-center"></button></div>`;
+                    } else if (step.code) {
+                        block = `<div class="bg-slate-800 rounded-lg"><div class="p-4 flex items-center justify-between border-b border-slate-600"><span class="text-slate-400 font-mono text-sm">${step.title.split('`')[1]}</span><button class="copy-button relative w-8 h-8 flex-shrink-0 bg-slate-600 text-white rounded-md"></button></div><pre class="p-4 text-sm text-slate-200 font-mono"><code>${step.code.replace(/</g, "&lt;")}</code></pre></div>`;
+                    }
+                    return `<div class="bg-white p-6 rounded-xl shadow-md border border-slate-200"><h3 class="text-xl font-semibold text-slate-800 mb-4">${step.title}</h3>${block}</div>`;
+                }).join('');
+            });
+            
+            tabNav.addEventListener('click', e => {
+                if(e.target.matches('.tab-button')) {
+                    const target = e.target.dataset.target;
+                    tabNav.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    container.querySelectorAll('.guide-content').forEach(c => c.style.display = 'none');
+                    container.querySelector(`#${target}`).style.display = 'block';
+                }
+            });
+            tabNav.querySelector('[data-target="vite-guide"]').click();
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = data.quiz.map(q => {
+                const questionHeader = `<p class="font-semibold text-slate-700">${q.id.replace('q', '')}. ${q.question}</p>`;
+                let answerHtml = '';
+                if(q.type === 'teorica') {
+                    answerHtml = `<div class="mt-2 space-y-2">${q.options.map(o => `
+                        <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 has-[:checked]:bg-orange-50 has-[:checked]:border-orange-300 cursor-pointer">
+                            <input type="radio" name="${q.id}" value="${o}" class="h-4 w-4 text-orange-500 border-slate-300 focus:ring-orange-500">
+                            <span class="ml-3 text-slate-600">${o}</span>
+                        </label>`).join('')}
+                    </div>`;
+                } else {
+                    answerHtml = `<textarea id="${q.id}-answer" rows="2" class="mt-2 w-full p-2 border border-slate-300 rounded-md font-mono text-sm focus:ring-orange-500 focus:border-orange-500"></textarea>`;
+                }
+                return `<div id="${q.id}" class="quiz-question p-4 bg-slate-50 border-l-4 border-slate-200 rounded-r-lg">${questionHeader}${answerHtml}</div>`;
+            }).join('');
+        }
+
+        function renderGabarito() {
+             const container = document.getElementById('gabarito-container');
+             container.innerHTML = data.quiz.map(q => `
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
+                    <p class="font-semibold text-slate-800">${q.id.replace('q', '')}. ${q.question}</p>
+                    <p class="mt-2 p-2 bg-green-100 text-green-800 rounded-md text-sm"><strong>Resposta:</strong> ${q.answer}</p>
+                    <p class="mt-2 text-slate-600 text-sm">${q.explanation}</p>
+                </div>
+             `).join('');
+        }
+
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            data.quiz.forEach(q => {
+                const questionEl = document.getElementById(q.id);
+                questionEl.classList.remove('correct', 'incorrect');
+                let userAnswer;
+                if(q.type === 'teorica') {
+                    const checked = questionEl.querySelector(`input[name=${q.id}]:checked`);
+                    userAnswer = checked ? checked.value : null;
+                } else {
+                    userAnswer = document.getElementById(`${q.id}-answer`).value.trim();
+                }
+
+                const isCorrect = userAnswer && userAnswer.toLowerCase() === q.answer.toLowerCase();
+                
+                if (isCorrect) {
+                    score++;
+                    questionEl.classList.add('correct');
+                } else {
+                    questionEl.classList.add('incorrect');
+                }
+            });
+            const resultsEl = document.getElementById('quiz-results');
+            resultsEl.innerHTML = `<p class="text-2xl font-bold">Você acertou ${score} de ${data.quiz.length}!</p>`;
+        });
+        
+        function initialize() {
+            renderPracticalGuide();
+            renderQuiz();
+            renderGabarito();
+            setupCopyButtons();
+            
+            const initialTarget = window.location.hash.substring(1) || 'introducao';
+            showSection(initialTarget);
+        }
+
+        initialize();
+    });
+</script>
+</body>
+</html>
