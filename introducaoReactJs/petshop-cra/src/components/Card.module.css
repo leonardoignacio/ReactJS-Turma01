@@ -1,0 +1,45 @@
+.card {
+    background-color: var(--surface-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+  
+  .iconWrapper {
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    height: 32px;
+    width: 32px;
+    color: var(--primary-color);
+  }
+  
+  .name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0.5rem 0;
+  }
+  
+  .species {
+    font-size: 1rem;
+    color: #475569;
+  }
+  

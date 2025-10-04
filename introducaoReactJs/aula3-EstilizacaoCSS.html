@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encontro 3 - Estilização Profissional em React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        .font-display { font-family: 'Poppins', sans-serif; }
+        .nav-link.active { background-color: #f97316; color: #ffffff; }
+        .tab-button.active { border-color: #f97316; background-color: #fff; color: #f97316; font-weight: 600; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .copy-button .copy-icon, .copy-button .check-icon { transition: transform 0.2s, opacity 0.2s; }
+        .copy-button .check-icon { transform: scale(0); opacity: 0; position: absolute; }
+        .copy-button.copied .copy-icon { transform: scale(0); opacity: 0; }
+        .copy-button.copied .check-icon { transform: scale(1); opacity: 1; }
+        .quiz-question.correct { border-left-color: #22c55e; }
+        .quiz-question.incorrect { border-left-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside class="w-full md:w-72 bg-white md:border-r border-slate-200 p-6 flex-shrink-0">
+            <header class="flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center">
+                     <span class="text-2xl text-orange-400 font-bold">R</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">Encontro 3</h1>
+                    <p class="text-xs text-slate-500">Estilização Profissional</p>
+                </div>
+            </header>
+            <nav id="main-navigation">
+                <ul class="space-y-2">
+                    <li><a href="#fundamentos" data-target="fundamentos" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Módulo 1: Fundamentos</a></li>
+                    <li><a href="#mao-na-massa" data-target="mao-na-massa" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Módulo 2: Mão na Massa</a></li>
+                    <li><a href="#avaliacao" data-target="avaliacao" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-200">Módulo 3: Avaliação</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 sm:p-10 overflow-y-auto">
+            
+            <section id="fundamentos" class="content-section space-y-12">
+                <div>
+                    <h1 class="text-4xl font-display font-bold text-slate-900">Módulo 1: Estilização Profissional e UX</h1>
+                    <p class="mt-4 text-lg text-slate-600">Vamos aprofundar nossas habilidades de estilização para criar aplicações React com aparência profissional e de fácil manutenção. O foco será em criar um sistema de design coeso com variáveis CSS, encapsular estilos com CSS Modules e aprimorar a experiência do usuário com SVGs e páginas de erro 404 bem definidas.</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-orange-400 pb-2">CSS com Variáveis: A Base do seu Design System</h2>
+                    <p class="text-slate-700">Variáveis CSS (Custom Properties) são a espinha dorsal de um design consistente. Ao declarar suas cores, fontes e espaçamentos no seletor <code class="font-mono text-sm bg-slate-200 p-1 rounded">:root</code>, você cria uma "única fonte da verdade" para o estilo da sua aplicação. Isso torna a manutenção e a aplicação de temas (como um modo escuro) trivial, pois você só precisa alterar o valor da variável em um único lugar.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-orange-400 pb-2">CSS Modules: Estilos Encapsulados e Sem Conflitos</h2>
+                    <p class="text-slate-700">Para evitar que estilos de um componente "vazem" e afetem outros, usamos CSS Modules. Ao nomear seu arquivo como <code class="font-mono text-sm bg-slate-200 p-1 rounded">Componente.module.css</code>, o sistema de build do React gera nomes de classe únicos em tempo de compilação. Isso garante que seus estilos sejam completamente locais e modulares, eliminando o risco de conflitos de especificidade em aplicações grandes.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-orange-400 pb-2">SVGs: Gráficos Vetoriais para uma UI Nítida</h2>
+                    <p class="text-slate-700">SVGs (Scalable Vector Graphics) são ideais para ícones e logotipos por serem definidos por vetores, não pixels. Isso significa que eles podem ser redimensionados infinitamente sem perder qualidade. Ferramentas como Vite e Create React App (com configuração adicional) podem importar arquivos <code class="font-mono text-sm bg-slate-200 p-1 rounded">.svg</code> diretamente como componentes React, facilitando a estilização e a manipulação via código.</p>
+                </div>
+            </section>
+
+            <section id="mao-na-massa" class="content-section">
+                <h1 class="text-4xl font-display font-bold text-slate-900 mb-4">Módulo 2: Projeto PetLovers</h1>
+                <p class="text-lg text-slate-600 mb-8">Vamos construir uma página de Pet Shop aplicando todos esses conceitos. Criaremos um layout responsivo, com um cabeçalho fixo, uma lista de pets em cards com efeitos de hover (usando CSS Modules e um ícone SVG), e uma página 404 para rotas inválidas. Siga o passo a passo completo para a sua ferramenta de preferência.</p>
+                <div id="tab-navigation" class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 p-2 bg-slate-200 rounded-xl mb-12">
+                    <button data-target="cra-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 rounded-lg">Create React App</button>
+                    <button data-target="vite-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 rounded-lg">Vite</button>
+                    <button data-target="nextjs-guide" class="tab-button w-full sm:w-auto text-center px-6 py-3 rounded-lg">Next.js</button>
+                </div>
+                
+                <div id="cra-guide" class="guide-content space-y-6"></div>
+                <div id="vite-guide" class="guide-content space-y-6"></div>
+                <div id="nextjs-guide" class="guide-content space-y-6"></div>
+            </section>
+
+            <section id="avaliacao" class="content-section">
+                <h1 class="text-4xl font-display font-bold text-slate-900 mb-4">Módulo 3: Avaliação</h1>
+                <p class="text-lg text-slate-600 mb-8">Teste seus conhecimentos sobre estilização, SVGs e roteamento de 404 em React.</p>
+                
+                <div class="bg-white p-8 rounded-xl shadow-sm border">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Questionário Interativo</h2>
+                    <div id="quiz-container" class="space-y-6"></div>
+                    <div id="quiz-results" class="mt-8 text-center" ></div>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                        <button id="submit-quiz" class="flex-1 w-full bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors">Verificar Respostas</button>
+                        <button id="show-gabarito" class="flex-1 w-full bg-slate-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-700 transition-colors">Ver Gabarito</button>
+                    </div>
+                </div>
+
+                <div id="gabarito-container-wrapper" class="mt-12" style="display: none;">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Gabarito Comentado</h2>
+                    <div id="gabarito-container" class="space-y-6"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const copyIconSVG = `<svg class="copy-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
+        const checkIconSVG = `<svg class="check-icon w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        
+        const data = {
+    practicalGuides: {
+        shared: {
+            indexCss: `:root {\n  --primary-color: #f97316;\n  --text-color: #1e293b;\n  --surface-color: #ffffff;\n  --bg-color: #f1f5f9;\n  --border-color: #e2e8f0;\n}\n\nbody {\n  margin: 0;\n  font-family: 'Inter', sans-serif;\n  background-color: var(--bg-color);\n  color: var(--text-color);\n}`,
+            pawSvg: `<?xml version="1.0" ?><svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M155.1,133.58,155,133.63a28,28,0,1,0,32.33,39.63l.13-.08a28,28,0,0,0-32.46-39.52Zm-61.64.1a28,28,0,1,0-32.33,39.63l-.13-.08a28,28,0,0,0,32.46-39.52ZM128,32a88,88,0,0,0-72.33,135.55,36,36,0,1,0,40-45.72,32,32,0,0,1,64.66,0,36,36,0,1,0,40,45.72A88,88,0,0,0,128,32Z" fill="currentColor"/></svg>`,
+            headerModuleCss: `.header {\n  background-color: var(--surface-color);\n  padding: 1rem 2rem;\n  border-bottom: 1px solid var(--border-color);\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.logo {\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n\n.logoText {\n  font-family: 'Poppins', sans-serif;\n  font-size: 1.5rem;\n  font-weight: bold;\n  color: var(--text-color);\n}\n\n.logoIcon {\n  height: 28px;\n  width: 28px;\n  color: var(--primary-color);\n}\n\n.nav {\n  display: flex;\n  gap: 1rem;\n}\n\n.link {\n  text-decoration: none;\n  color: var(--text-color);\n  font-weight: 500;\n}\n\n.link:hover {\n  color: var(--primary-color);\n}`,
+            cardModuleCss: `.card {\n  background-color: var(--surface-color);\n  border-radius: 16px;\n  padding: 2rem;\n  text-align: center;\n  box-shadow: 0 6px 16px rgba(0,0,0,0.06);\n  border: 1px solid var(--border-color);\n  transition: transform 0.3s ease, box-shadow 0.3s ease;\n}\n\n.card:hover {\n  transform: translateY(-8px);\n  box-shadow: 0 12px 24px rgba(0,0,0,0.1);\n}\n\n.iconWrapper {\n  background-color: var(--bg-color);\n  border-radius: 50%;\n  width: 64px;\n  height: 64px;\n  margin: 0 auto 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.icon {\n  height: 32px;\n  width: 32px;\n  color: var(--primary-color);\n}\n\n.name {\n  font-family: 'Poppins', sans-serif;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: var(--text-color);\n  margin: 0.5rem 0;\n}\n\n.species {\n  font-size: 1rem;\n  color: #475569;\n}`,
+            homePageModuleCss: `.home {\n  padding: 2rem;\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\n.title {\n  font-family: 'Poppins', sans-serif;\n  text-align: center;\n  font-size: 2.25rem;\n  font-weight: 700;\n  margin-bottom: 2rem;\n}\n\n.cardGrid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));\n  gap: 1.5rem;\n}`
+        },
+        cra: [
+            { title: '1. Crie o projeto e instale o router', command: 'npx create-react-app petshop-cra && cd petshop-cra && npm install react-router-dom' },
+            { title: '2. Defina os estilos globais', file: 'src/index.css', code: 'SHARED_INDEX_CSS' },
+            { title: '3. Crie a estrutura de pastas', text: 'Dentro de `src`, crie as pastas `assets`, `components` e `pages`.' },
+            { title: '4. Crie o ícone SVG', file: 'src/assets/PawPrint.svg', code: 'SHARED_PAW_SVG' },
+            { title: '5. Crie o CSS do Header', file: 'src/components/Header.module.css', code: 'SHARED_HEADER_CSS'},
+            { title: '6. Crie o componente Header', file: 'src/components/Header.jsx', code: `import styles from './Header.module.css';\nimport { NavLink } from 'react-router-dom';\nimport { ReactComponent as PawIcon } from '../assets/PawPrint.svg';\n\nfunction Header() {\n  return (\n    <header className={styles.header}>\n      <div className={styles.logo}>\n        <PawIcon className={styles.logoIcon} />\n        <span className={styles.logoText}>PetLovers</span>\n      </div>\n      <nav className={styles.nav}>\n        <NavLink to="/" className={styles.link}>Home</NavLink>\n        <NavLink to="/about" className={styles.link}>Sobre</NavLink>\n        <NavLink to="/contact" className={styles.link}>Contato</NavLink>\n      </nav>\n    </header>\n  );\n}\n\nexport default Header;`},
+            { title: '7. Crie o CSS do Card', file: 'src/components/Card.module.css', code: 'SHARED_CARD_CSS' },
+            { title: '8. Crie o componente Card', file: 'src/components/Card.jsx', code: `import styles from './Card.module.css';\nimport { ReactComponent as PawIcon } from '../assets/PawPrint.svg';\n\nfunction Card({ name, species }) {\n  return (\n    <div className={styles.card}>\n      <div className={styles.iconWrapper}>\n        <PawIcon className={styles.icon} />\n      </div>\n      <h2 className={styles.name}>{name}</h2>\n      <p className={styles.species}>{species}</p>\n    </div>\n  );\n}\n\nexport default Card;`},
+            { title: '9. Crie o CSS do Footer', file: 'src/components/Footer.module.css', code: `.footer {\n  background-color: var(--surface-color);\n  border-top: 1px solid var(--border-color);\n  padding: 1rem 2rem;\n  text-align: center;\n  font-size: 0.875rem;\n  color: #64748b;\n}`},
+            { title: '10. Crie o componente Footer', file: 'src/components/Footer.jsx', code: `import styles from './Footer.module.css';\n\nfunction Footer() {\n  return (\n    <footer className={styles.footer}>\n      <p>&copy; {new Date().getFullYear()} PetLovers. Todos os direitos reservados.</p>\n    </footer>\n  );\n}\n\nexport default Footer;`},
+            { title: '11. Crie o CSS da HomePage', file: 'src/pages/HomePage.module.css', code: 'SHARED_HOMEPAGE_CSS' },
+            { title: '12. Crie a HomePage', file: 'src/pages/HomePage.jsx', code: `import Card from '../components/Card';\nimport styles from './HomePage.module.css';\n\nconst pets = [\n  { name: "Rex", species: "Cachorro" }, { name: "Miau", species: "Gato" }, { name: "Piu", species: "Pássaro" },\n  { name: "Nemo", species: "Peixe" }, { name: "Hamtaro", species: "Hamster" }, { name: "Veloz", species: "Tartaruga" }\n];\n\nfunction HomePage() {\n  return (\n    <main className={styles.home}>\n      <h1 className={styles.title}>Nossos Amigos</h1>\n      <div className={styles.cardGrid}>\n        {pets.map((pet, index) => (\n          <Card key={index} name={pet.name} species={pet.species} />\n        ))}\n      </div>\n    </main>\n  );\n}\nexport default HomePage;` },
+            { title: '13. Crie a AboutPage', file: 'src/pages/AboutPage.jsx', code: `function AboutPage() {\n  return (\n    <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>\n      <h1>Sobre o PetLovers</h1>\n      <p>Somos apaixonados por animais e criamos este espaço para celebrar nossos amigos peludos, escamosos e emplumados.</p>\n    </main>\n  );\n}\n\nexport default AboutPage;`},
+            { title: '14. Crie a ContactPage', file: 'src/pages/ContactPage.jsx', code: `function ContactPage() {\n  return (\n    <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>\n      <h1>Contato</h1>\n      <p>Entre em contato conosco pelo e-mail: contato@petlovers.com</p>\n    </main>\n  );\n}\n\nexport default ContactPage;`},
+            { title: '15. Crie a NotFoundPage', file: 'src/pages/NotFoundPage.jsx', code: `function NotFoundPage() {\n  return (\n    <main style={{ padding: '2rem', textAlign: 'center' }}>\n      <h1>404 - Página Não Encontrada</h1>\n      <p>Desculpe, não conseguimos encontrar o que você procura.</p>\n    </main>\n  );\n}\n\nexport default NotFoundPage;`},
+            { title: '16. Configure as rotas em `App.js`', file: 'src/App.js', code: `import { BrowserRouter, Routes, Route } from 'react-router-dom';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport HomePage from './pages/HomePage';\nimport AboutPage from './pages/AboutPage';\nimport ContactPage from './pages/ContactPage';\nimport NotFoundPage from './pages/NotFoundPage';\n\nfunction App() {\n  return (\n    <BrowserRouter>\n      <Header />\n      <main style={{minHeight: 'calc(100vh - 120px)'}}>\n        <Routes>\n          <Route path="/" element={<HomePage />} />\n          <Route path="/about" element={<AboutPage />} />\n          <Route path="/contact" element={<ContactPage />} />\n          <Route path="*" element={<NotFoundPage />} />\n        </Routes>\n      </main>\n      <Footer />\n    </BrowserRouter>\n  );\n}\n\nexport default App;`},
+            { title: '17. Inicie o Servidor', command: 'npm start' },
+        ],
+        vite: [
+            // Os passos para Vite seriam muito similares aos do CRA, com a principal diferença na importação do SVG.
+            // Para manter a resposta concisa, vou focar nas diferenças chave.
+            { title: '1. Crie o projeto e instale o router', command: 'npm create vite@latest petshop-vite -- --template react && cd petshop-vite && npm install && npm install react-router-dom' },
+            { title: '2. ... (passos 2-5, 7, 9, 11-15 são idênticos ao CRA) ...', text: 'Os passos para criação de CSS e páginas simples são os mesmos do guia para Create React App.' },
+            { title: '6. Crie o componente Header (Vite)', file: 'src/components/Header.jsx', code: `import styles from './Header.module.css';\nimport { NavLink } from 'react-router-dom';\nimport PawIcon from '../assets/PawPrint.svg?react';\n\nfunction Header() {\n  // ... mesmo JSX do CRA ... \n}\n\nexport default Header;`},
+            { title: '8. Crie o componente Card (Vite)', file: 'src/components/Card.jsx', code: `import styles from './Card.module.css';\nimport PawIcon from '../assets/PawPrint.svg?react';\n\nfunction Card({ name, species }) {\n  // ... mesmo JSX do CRA ...\n}\n\nexport default Card;`},
+            { title: '10. Crie o componente Footer (Vite)', file: 'src/components/Footer.jsx', code: '// ... código idêntico ao do CRA ...'},
+            { title: '16. Configure as rotas em `App.jsx`', file: 'src/App.jsx', code: '// ... código idêntico ao do App.js do CRA ...'},
+            { title: '17. Inicie o Servidor', command: 'npm run dev' },
+        ],
+        nextjs: [
+            // O guia para Next.js requer uma estrutura bem diferente devido ao App Router.
+            { title: '1. Crie o projeto', command: 'npx create-next-app@latest petshop-next' },
+            { title: '2. Defina os estilos globais', file: 'app/globals.css', code: 'SHARED_INDEX_CSS' }, // Reutilizando o indexCss como base
+            { title: '3. Adicione o SVG', file: 'public/PawPrint.svg', code: 'SHARED_PAW_SVG' },
+            { title: '4. Crie o CSS dos componentes', text: 'Crie os arquivos `app/components/Header.module.css`, `app/components/Card.module.css` e `app/components/Footer.module.css` com os mesmos conteúdos do guia CRA.'},
+            { title: '5. Crie o componente Header (Next.js)', file: 'app/components/Header.jsx', code: `'use client';\nimport Image from 'next/image';\nimport Link from 'next/link';\nimport styles from './Header.module.css';\n\nfunction Header() {\n  return (\n    <header className={styles.header}>\n      <div className={styles.logo}>\n        <Image src="/PawPrint.svg" alt="Logo" width={28} height={28} className={styles.logoIcon} />\n        <span className={styles.logoText}>PetLovers</span>\n      </div>\n      <nav className={styles.nav}>\n        <Link href="/" className={styles.link}>Home</Link>\n        <Link href="/about" className={styles.link}>Sobre</Link>\n        <Link href="/contact" className={styles.link}>Contato</Link>\n      </nav>\n    </header>\n  );\n}\nexport default Header;`},
+            { title: '6. Crie o componente Card (Next.js)', file: 'app/components/Card.jsx', code: `'use client';\nimport Image from 'next/image';\nimport styles from './Card.module.css';\n\nfunction Card({ name, species }) {\n  return (\n    <div className={styles.card}>\n      <div className={styles.iconWrapper}>\n        <Image src="/PawPrint.svg" alt="Ícone" width={32} height={32} className={styles.icon} />\n      </div>\n      <h2 className={styles.name}>{name}</h2>\n      <p className={styles.species}>{species}</p>\n    </div>\n  );\n}\nexport default Card;`},
+            { title: '7. Crie o componente Footer (Next.js)', file: 'app/components/Footer.jsx', code: `import styles from './Footer.module.css';\n\nfunction Footer() {\n  return (\n    <footer className={styles.footer}>\n      <p>&copy; {new Date().getFullYear()} PetLovers. Todos os direitos reservados.</p>\n    </footer>\n  );\n}\nexport default Footer;`},
+            { title: '8. Crie a HomePage', file: 'app/page.jsx', code: `import Card from './components/Card';\nimport styles from './HomePage.module.css'; // Crie este arquivo também\n\nconst pets = [\n  { name: "Rex", species: "Cachorro" }, { name: "Miau", species: "Gato" }, { name: "Piu", species: "Pássaro" },\n  { name: "Nemo", species: "Peixe" }, { name: "Hamtaro", species: "Hamster" }, { name: "Veloz", species: "Tartaruga" }\n];\n\nexport default function HomePage() {\n  return (\n    <main className={styles.home}>\n      <h1 className={styles.title}>Nossos Amigos</h1>\n      <div className={styles.cardGrid}>\n        {pets.map((pet, index) => (\n          <Card key={index} name={pet.name} species={pet.species} />\n        ))}\n      </div>\n    </main>\n  );\n}`},
+            { title: '9. Crie a AboutPage', file: 'app/about/page.jsx', code: `export default function AboutPage() {\n  return (\n    <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>\n      <h1>Sobre o PetLovers</h1>\n      <p>Somos apaixonados por animais e criamos este espaço para celebrar nossos amigos peludos, escamosos e emplumados.</p>\n    </main>\n  );\n}`},
+            { title: '10. Crie a ContactPage', file: 'app/contact/page.jsx', code: `export default function ContactPage() {\n  return (\n    <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>\n      <h1>Contato</h1>\n      <p>Entre em contato conosco pelo e-mail: contato@petlovers.com</p>\n    </main>\n  );\n}`},
+            { title: '11. Crie a página 404', file: 'app/not-found.jsx', code: `export default function NotFound() {\n  return (\n    <main style={{ padding: '2rem', textAlign: 'center' }}>\n      <h1>404 - Página Não Encontrada</h1>\n      <p>Desculpe, não conseguimos encontrar o que você procura.</p>\n    </main>\n  );\n}`},
+            { title: '12. Atualize o Layout principal', file: 'app/layout.jsx', code: `import Header from './components/Header';\nimport Footer from './components/Footer';\nimport './globals.css';\n\nexport const metadata = {\n  title: 'PetLovers',\n  description: 'Celebrando nossos amigos animais',\n};\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang="pt-BR">\n      <body>\n        <Header />\n        <main style={{minHeight: 'calc(100vh - 120px)'}}>{children}</main>\n        <Footer />\n      </body>\n    </html>\n  );\n}`},
+            { title: '13. Inicie o Servidor', command: 'npm run dev' },
+        ]
+    },
+    quiz: [
+        // O quiz permanece o mesmo da versão anterior.
+        { id: 'q1', type: 'teorica', question: 'Qual é a principal vantagem de usar CSS Modules?', options: ['Deixar o CSS mais rápido.', 'Garantir que os estilos de um componente não afetem outros.', 'Permitir o uso de JavaScript no CSS.'], answer: 'Garantir que os estilos de um componente não afetem outros.', explanation: 'CSS Modules geram nomes de classe únicos (ex: `Component_className__123xyz`) em tempo de compilação, prevenindo conflitos de estilo globais e garantindo que os estilos sejam escopados localmente para o componente que os importa.' },
+        { id: 'q2', type: 'teorica', question: 'Por que SVGs são preferíveis a imagens (PNG, JPG) para ícones e logotipos?', options: ['São sempre menores em tamanho de arquivo.', 'Não perdem qualidade ao serem redimensionados.', 'Carregam mais rápido em todas as situações.'], answer: 'Não perdem qualidade ao serem redimensionados.', explanation: 'Como são baseados em vetores (matemática) e não em pixels, os SVGs podem ser escalados para qualquer tamanho sem perda de nitidez, o que é ideal para design responsivo.' },
+        { id: 'q3', type: 'teorica', question: 'Em `react-router-dom`, qual rota é usada para capturar todos os caminhos não correspondidos e exibir uma página 404?', options: ['<Route path="/404" />', '<Route path="undefined" />', '<Route path="*" />'], answer: '<Route path="*" />', explanation: 'O caminho `*` funciona como um curinga (wildcard) que corresponde a qualquer URL que não tenha sido correspondida por uma rota anterior. Ele deve ser sempre o último na sua lista de rotas.' },
+        { id: 'q4', type: 'pratica', question: 'No Vite, como você importa um SVG como um componente React?', answer: "import MyIcon from './icon.svg?react';", explanation: 'Vite usa o sufixo `?react` para instruir seu sistema de build a transformar o arquivo SVG em um componente React que pode ser usado diretamente no JSX.' },
+        { id: 'q5', type: 'pratica', question: 'Qual é o nome do arquivo convencional para criar uma página 404 personalizada no Next.js App Router?', answer: 'not-found.jsx', explanation: 'O Next.js detecta automaticamente um arquivo chamado `not-found.jsx` ou `not-found.tsx` dentro da pasta `app` (ou de uma rota específica) e o renderiza para qualquer caminho não encontrado.' }
+    ]
+};
+        
+        const mainContent = document.querySelector('main');
+        const nav = document.getElementById('main-navigation');
+        
+        function showSection(targetId) {
+            mainContent.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            nav.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const section = document.getElementById(targetId);
+            const link = nav.querySelector(`.nav-link[data-target="${targetId}"]`);
+            if (section) {
+                section.classList.add('active', 'fade-in');
+                if (link) link.classList.add('active');
+            }
+        }
+        
+        nav.addEventListener('click', (e) => {
+            const link = e.target.closest('.nav-link');
+            if(link) { e.preventDefault(); const id = link.dataset.target; window.location.hash = id; showSection(id); }
+        });
+
+        function setupCopyButtons() {
+            document.querySelectorAll('.copy-button').forEach(button => {
+                if(button.childElementCount > 0) return;
+                button.innerHTML = copyIconSVG + checkIconSVG;
+                button.addEventListener('click', () => {
+                    const codeElement = button.closest('.bg-slate-800').querySelector('code');
+                    navigator.clipboard.writeText(codeElement.innerText);
+                    button.classList.add('copied');
+                    setTimeout(() => button.classList.remove('copied'), 2000);
+                });
+            });
+        }
+        
+        function renderPracticalGuide() {
+            const shared = data.practicalGuides.shared;
+            Object.keys(data.practicalGuides).filter(k => k !== 'shared').forEach(key => {
+                const guideContentEl = document.querySelector(`#${key}-guide`);
+                guideContentEl.innerHTML = data.practicalGuides[key].map(step => {
+                    let finalCode = step.code;
+                    if (finalCode) {
+                        finalCode = finalCode.replace(/SHARED_PAW_SVG/g, shared.pawSvg.replace(/</g, "&lt;"));
+                        finalCode = finalCode.replace(/SHARED_INDEX_CSS/g, shared.indexCss.replace(/</g, "&lt;"));
+                        finalCode = finalCode.replace(/SHARED_HEADER_CSS/g, shared.headerModuleCss.replace(/</g, "&lt;"));
+                        finalCode = finalCode.replace(/SHARED_CARD_CSS/g, shared.cardModuleCss.replace(/</g, "&lt;"));
+                        finalCode = finalCode.replace(/SHARED_HOMEPAGE_CSS/g, shared.homePageModuleCss.replace(/</g, "&lt;"));
+                    }
+
+                    let block = '';
+                    if (step.command) {
+                        block = `<div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between"><code class="font-mono text-sm text-slate-200">${step.command}</code><button class="copy-button relative w-8 h-8 flex-shrink-0 bg-slate-600 text-white rounded-md flex items-center justify-center"></button></div>`;
+                    } else if(step.file) {
+                        block = `<div class="bg-slate-800 rounded-lg"><div class="p-4 flex items-center justify-between border-b border-slate-600"><span class="font-mono text-sm text-slate-400">${step.file}</span><button class="copy-button relative w-8 h-8 flex-shrink-0 bg-slate-600 text-white rounded-md"></button></div><pre class="p-4 text-sm"><code class="font-mono text-slate-200">${finalCode}</code></pre></div>`;
+                    } else {
+                        return `<div class="p-6 bg-white rounded-xl shadow-sm border"><h3 class="text-xl font-semibold text-slate-800 mb-2">${step.title}</h3><p class="text-slate-600">${step.text}</p></div>`;
+                    }
+                    return `<div class="p-6 bg-white rounded-xl shadow-sm border"><h3 class="text-xl font-semibold text-slate-800 mb-4">${step.title}</h3>${block}</div>`;
+                }).join('');
+            });
+            const tabNav = document.querySelector('#mao-na-massa #tab-navigation');
+            tabNav.addEventListener('click', e => {
+                if(e.target.matches('.tab-button')) {
+                    const target = e.target.dataset.target;
+                    tabNav.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    document.querySelectorAll('#mao-na-massa .guide-content').forEach(c => c.style.display = 'none');
+                    document.querySelector(`#${target}`).style.display = 'block';
+                }
+            });
+            tabNav.querySelector('[data-target="vite-guide"]').click();
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = data.quiz.map((q, i) => {
+                const qNum = i + 1;
+                const header = `<p class="font-semibold text-slate-700">${qNum}. ${q.question}</p>`;
+                let answerHtml = '';
+                if(q.type === 'teorica') {
+                    answerHtml = `<div class="mt-2 space-y-2">${q.options.map(o => `<label class="flex items-center p-3 bg-white rounded-lg border cursor-pointer has-[:checked]:bg-orange-50 has-[:checked]:border-orange-300"><input type="radio" name="q${qNum}" value="${o}" class="h-4 w-4 text-orange-500"><span class="ml-3 text-slate-600">${o}</span></label>`).join('')}</div>`;
+                } else {
+                    answerHtml = `<input id="q${qNum}-answer" type="text" class="mt-2 w-full p-2 border rounded-md font-mono text-sm" />`;
+                }
+                return `<div id="q${qNum}" class="quiz-question p-4 bg-slate-50 border-l-4 border-slate-200 rounded-r-lg">${header}${answerHtml}</div>`;
+            }).join('');
+        }
+
+        function renderGabarito() {
+             const container = document.getElementById('gabarito-container');
+             container.innerHTML = data.quiz.map((q, i) => `
+                <div class="p-4 bg-white rounded-xl shadow-sm border">
+                    <p class="font-semibold text-slate-800">${i + 1}. ${q.question}</p>
+                    <p class="mt-2 p-2 bg-green-100 text-green-800 rounded-md text-sm"><strong>Resposta:</strong> ${q.answer}</p>
+                    <p class="mt-2 text-slate-600 text-sm">${q.explanation}</p>
+                </div>`).join('');
+        }
+
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            data.quiz.forEach((q, i) => {
+                const qNum = i + 1;
+                const qEl = document.getElementById(`q${qNum}`);
+                qEl.classList.remove('correct', 'incorrect');
+                let userAnswer;
+                if(q.type === 'teorica') {
+                    const checked = qEl.querySelector(`input[name=q${qNum}]:checked`);
+                    userAnswer = checked ? checked.value : null;
+                } else {
+                    userAnswer = document.getElementById(`q${qNum}-answer`).value.trim();
+                }
+                const isCorrect = userAnswer && userAnswer.toLowerCase().trim().replace(/\s+/g, ' ') === q.answer.toLowerCase().trim().replace(/\s+/g, ' ');
+                if (isCorrect) { score++; qEl.classList.add('correct'); } 
+                else { qEl.classList.add('incorrect'); }
+            });
+            document.getElementById('quiz-results').innerHTML = `<p class="text-2xl font-display font-bold">Você acertou ${score} de ${data.quiz.length}!</p>`;
+        });
+
+        document.getElementById('show-gabarito').addEventListener('click', () => {
+            const gabaritoWrapper = document.getElementById('gabarito-container-wrapper');
+            const isHidden = gabaritoWrapper.style.display === 'none';
+            gabaritoWrapper.style.display = isHidden ? 'block' : 'none';
+            if(isHidden) {
+                gabaritoWrapper.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        function initialize() {
+            renderPracticalGuide();
+            renderQuiz();
+            renderGabarito();
+            setupCopyButtons();
+            const initialTarget = window.location.hash.substring(1) || 'fundamentos';
+            showSection(initialTarget);
+        }
+        initialize();
+    });
+</script>
+</body>
+</html>
+

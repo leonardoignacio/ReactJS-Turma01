@@ -1,0 +1,42 @@
+.header {
+    background-color: var(--surface-color);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logoText {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  .logoIcon {
+    height: 28px;
+    width: 28px;
+    color: var(--primary-color);
+  }
+  
+  .nav {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+  
+  .link:hover {
+    color: var(--primary-color);
+  }
