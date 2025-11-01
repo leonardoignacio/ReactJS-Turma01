@@ -24,6 +24,10 @@ function App() {
         <Route path="/categoria/:id/*" element={<Categoria />} />
         <Route path="/posts/:id" element={<Post />} />
         
+        {/* Rotas administrativas */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/NovaCategoria" element={<FormCategoria />} />
+        
         <Route path="*" element={<Pagina404 />} />
       </Routes>
     </Router>
