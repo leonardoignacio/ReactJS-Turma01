@@ -27,6 +27,7 @@ function App() {
         {/* Rotas administrativas */}
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/NovaCategoria" element={<FormCategoria />} />
+        <Route path="/admin/categoria/:id" element={<FormCategoria />} />
         
         <Route path="*" element={<Pagina404 />} />
       </Routes>

@@ -1,24 +1,20 @@
 {
   "categorias": [
     {
-      "id": "bem-estar",
-      "nome": "bem-estar",
-      "subcategorias": [
-        "higiene",
-        "saude"
-      ]
+      "nome": "Bem-estar",
+      "id": "bem-estar"
     },
     {
-      "id": "comportamento",
-      "nome": "comportamento",
-      "subcategorias": [
-        "treinamento",
-        "educacao"
-      ]
+      "nome": "Comportamento",
+      "id": "comportamento"
     },
     {
-      "id": "cuidados",
-      "nome": "cuidados",
+      "nome": "Cuidados",
+      "id": "cuidados"
+    },
+    {
+      "id": "Mimos",
+      "nome": "Mimos",
       "subcategorias": []
     }
   ],

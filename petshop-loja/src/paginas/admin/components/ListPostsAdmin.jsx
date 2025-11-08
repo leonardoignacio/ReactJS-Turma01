@@ -4,17 +4,17 @@ import { api, busca } from "../../../api/api"
 import "../components/tabela.css";
 import { Button } from "@mui/material";
 
-const ListaCatAdmin = () => {
-    const [categorias, setCategorias] = useState([]);
+const ListaPostsAdmin = () => {
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
-        busca(`/categorias`, setCategorias)
+        busca(`/posts`, setPosts)
     }, [])
 
-    const excluirCategoria = (categoriaDel) => {
-        api.delete(`categorias/${categoriaDel.id}/`)
+    const excluir = (postDel) => {
+        api.delete(`posts/${postDel.id}/`)
             .then(() => {
-                const listaCategorias = categorias.filter(categoria => categoria.id !== categoriaDel.id)
-                setCategorias([...listaCategorias])
+                const listaposts = posts.filter(post => post.id !== postDel.id)
+                setPosts([...listaposts])
             })
 
     }
@@ -24,7 +24,7 @@ const ListaCatAdmin = () => {
             <table className="tabela">
                 <thead>
                     <tr>
-                        <th className="tabela__coluna--g">Categoria</th>
+                        <th className="tabela__coluna--g">Posts</th>
                         <th colSpan="3" className="tabela__coluna--p tabela__alinhamento--direita"><Link to="/admin/NovaCategoria">
                             <Button
                                 type="submit"
@@ -32,7 +32,7 @@ const ListaCatAdmin = () => {
                                 fullWidth
                                 sx={{ marginTop: 1 }}
                             >
-                                Nova Categoria
+                                Novo Post
                             </Button>
                         </Link>
                         </th>
@@ -40,13 +40,16 @@ const ListaCatAdmin = () => {
                 </thead>
                 <tbody >
                     {
-                        categorias.map((categoria) => (
-                            <tr key={categoria.id}>
-                                <td className="tabela__coluna--m">
-                                    <Link to={`/categoria/${categoria.id}`}>{categoria.nome}</Link>
+                        posts.map((post) => (
+                            <tr key={post.id}>
+                                <td>{post.categoria}</td>
+                                <td>
+                                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
                                 </td>
-                                <td colSpan="2" className="tabela__coluna--m tabela__alinhamento--direita">
-                                    <Link to={`/admin/categoria/${categoria.id}`}>
+                                <td>{post.metadescription}</td>
+                                <td>
+
+                                    <Link to={`/admin/posts/${post.id}`}>
                                         <Button
                                             type="submit"
                                             variant="contained"
@@ -56,14 +59,14 @@ const ListaCatAdmin = () => {
                                             Editar
                                         </Button>
                                     </Link>
-                                    <Link to={`/admin`}>
+                                    <Link to={`/admin/posts`}>
                                         <Button
                                             type="submit"
                                             variant="contained"
                                             color="error"
                                             align="right"
                                             sx={{ margin: "0 0.25rem" }}
-                                            onClick={() => excluirCategoria(categoria)}
+                                            onClick={() => excluir(post)}
                                         >
                                             Excluir
                                         </Button>
@@ -78,4 +81,4 @@ const ListaCatAdmin = () => {
     );
 }
 
-export default ListaCatAdmin;
+export default ListaPostsAdmin;
