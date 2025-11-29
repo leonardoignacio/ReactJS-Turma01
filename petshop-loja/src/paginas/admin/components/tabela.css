@@ -33,10 +33,14 @@
 .tabela td {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    padding-right: 1rem;
 }
 
 .tabela__alinhamento--direita {
     text-align: right;
+}
+.tabela__alinhamento--esquerda {
+    text-align: left;
 }
 
 .tabela__coluna--p {

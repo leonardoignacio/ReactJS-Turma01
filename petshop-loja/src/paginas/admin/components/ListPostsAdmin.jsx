@@ -24,8 +24,10 @@ const ListaPostsAdmin = () => {
             <table className="tabela">
                 <thead>
                     <tr>
-                        <th className="tabela__coluna--g">Posts</th>
-                        <th colSpan="3" className="tabela__coluna--p tabela__alinhamento--direita"><Link to="/admin/NovaCategoria">
+                    <th className="tabela__coluna--p">Categoria</th>
+                        <th className="tabela__coluna--m">Título</th>
+                        <th className="tabela__coluna--m">Posts</th>
+                        <th colSpan="3" className=" tabela__alinhamento--direita"><Link to="/admin/NovaCategoria">
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -42,11 +44,11 @@ const ListaPostsAdmin = () => {
                     {
                         posts.map((post) => (
                             <tr key={post.id}>
-                                <td>{post.categoria}</td>
-                                <td>
+                                <td className="tabela__coluna--p">{post.categoria}</td>
+                                <td className="tabela__alinhamento--esquerda tabela__coluna--p">
                                     <Link to={`/posts/${post.id}`}>{post.title}</Link>
                                 </td>
-                                <td>{post.metadescription}</td>
+                                <td className="tabela__alinhamento--esquerda tabela__coluna--g">{post.metadescription}</td>
                                 <td>
 
                                     <Link to={`/admin/posts/${post.id}`}>
@@ -59,6 +61,8 @@ const ListaPostsAdmin = () => {
                                             Editar
                                         </Button>
                                     </Link>
+                                </td>
+                                <td>
                                     <Link to={`/admin/posts`}>
                                         <Button
                                             type="submit"
