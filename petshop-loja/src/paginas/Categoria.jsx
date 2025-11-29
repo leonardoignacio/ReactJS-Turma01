@@ -16,7 +16,7 @@ const Categoria = () => {
 
   useEffect(() => {
     busca(`/categorias/${id}`, (categoria) => {
-      setSubCategorias(categoria.subcategorias);
+      setSubCategorias(categoria.subcategorias || []);
     });
   }, [id]);
 

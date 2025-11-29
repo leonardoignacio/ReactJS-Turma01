@@ -2,10 +2,17 @@
   "categorias": [
     {
       "nome": "Bem-estar",
+      "subcategorias": [
+        "Mimos",
+        "Cuidados"
+      ],
       "id": "bem-estar"
     },
     {
       "nome": "Comportamento",
+      "subcategorias": [
+        "teste1"
+      ],
       "id": "comportamento"
     },
     {
